@@ -23,7 +23,11 @@ class AExamen2MultiplayerProjectile : public AActor
 	UProjectileMovementComponent* ProjectileMovement;
 
 public:
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
+	class UStaticMeshComponent* Cosa;
 	AExamen2MultiplayerProjectile();
+	
 
 	/** called when projectile hits something */
 	UFUNCTION()

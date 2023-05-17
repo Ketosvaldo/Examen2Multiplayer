@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "Examen2MultiplayerProjectile.h"
 #include "Examen2MultiplayerCharacter.generated.h"
 
 class UInputComponent;
@@ -18,7 +19,7 @@ UCLASS(config=Game)
 class AExamen2MultiplayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
-
+	
 	/** Pawn mesh: 1st person view (arms; seen only by self) */
 	UPROPERTY(VisibleDefaultsOnly, Category=Mesh)
 	USkeletalMeshComponent* Mesh1P;
@@ -44,6 +45,10 @@ public:
 	AExamen2MultiplayerCharacter();
 
 protected:
+		
+	UPROPERTY(EditDefaultsOnly, Category="Gameplay|Projectile")
+	TSubclassOf<AExamen2MultiplayerProjectile> ProjectileClass;
+	
 	virtual void BeginPlay();
 
 public:
@@ -70,6 +75,9 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+	
+	UFUNCTION(Server, Reliable)
+	void HandleFire();
 
 protected:
 	// APawn interface

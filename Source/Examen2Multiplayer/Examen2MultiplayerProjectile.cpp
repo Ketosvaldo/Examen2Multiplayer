@@ -6,6 +6,7 @@
 
 AExamen2MultiplayerProjectile::AExamen2MultiplayerProjectile() 
 {
+	bReplicates = true;
 	// Use a sphere as a simple collision representation
 	CollisionComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComp"));
 	CollisionComp->InitSphereRadius(5.0f);
@@ -29,6 +30,18 @@ AExamen2MultiplayerProjectile::AExamen2MultiplayerProjectile()
 
 	// Die after 3 seconds by default
 	InitialLifeSpan = 3.0f;
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> DefaultMesh(TEXT("/Game/FPWeapon/Mesh/FirstPersonProjectileMesh.FirstPersonProjectileMesh"));
+	Cosa = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	Cosa->SetupAttachment(RootComponent);
+
+	//Set the Static Mesh and its position/scale if you successfully found a mesh asset to use.
+	if (DefaultMesh.Succeeded())
+	{
+		Cosa->SetStaticMesh(DefaultMesh.Object);
+		Cosa->SetRelativeLocation(FVector(0.0f, 0.0f, -37.5f));
+		Cosa->SetRelativeScale3D(FVector(0.75f, 0.75f, 0.75f));
+	}
 }
 
 void AExamen2MultiplayerProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)

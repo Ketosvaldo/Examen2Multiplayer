@@ -35,6 +35,8 @@ AExamen2MultiplayerCharacter::AExamen2MultiplayerCharacter()
 	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
 	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
 
+	ProjectileClass = AExamen2MultiplayerProjectile::StaticClass();
+
 }
 
 void AExamen2MultiplayerCharacter::BeginPlay()
@@ -69,6 +71,8 @@ void AExamen2MultiplayerCharacter::SetupPlayerInputComponent(class UInputCompone
 
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AExamen2MultiplayerCharacter::Look);
+		
+		PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AExamen2MultiplayerCharacter::HandleFire);
 	}
 }
 
@@ -107,4 +111,18 @@ void AExamen2MultiplayerCharacter::SetHasRifle(bool bNewHasRifle)
 bool AExamen2MultiplayerCharacter::GetHasRifle()
 {
 	return bHasRifle;
+}
+
+void AExamen2MultiplayerCharacter::HandleFire_Implementation()
+{
+	if(GEngine)
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Some debug message!"));
+	FVector spawnLocation = GetActorLocation() + ( GetActorRotation().Vector()  * 100.0f ) + (GetActorUpVector() * 50.0f);
+	FRotator spawnRotation = GetActorRotation();
+
+	FActorSpawnParameters spawnParameters;
+	spawnParameters.Instigator = GetInstigator();
+	spawnParameters.Owner = this;
+
+	AExamen2MultiplayerProjectile* spawnedProjectile = GetWorld()->SpawnActor<AExamen2MultiplayerProjectile>(spawnLocation, spawnRotation, spawnParameters);
 }
