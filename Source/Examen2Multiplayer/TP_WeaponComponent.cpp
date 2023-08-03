@@ -29,7 +29,7 @@ void UTP_WeaponComponent::Fire()
 	if (ProjectileClass != nullptr)
 	{
 		UWorld* const World = GetWorld();
-		if (World != nullptr)
+		/*if (World != nullptr)
 		{
 			APlayerController* PlayerController = Cast<APlayerController>(Character->GetController());
 			const FRotator SpawnRotation = PlayerController->PlayerCameraManager->GetCameraRotation();
@@ -42,7 +42,7 @@ void UTP_WeaponComponent::Fire()
 	
 			// Spawn the projectile at the muzzle
 			World->SpawnActor<AExamen2MultiplayerProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
-		}
+		}*/
 	}
 	
 	// Try and play the sound if specified

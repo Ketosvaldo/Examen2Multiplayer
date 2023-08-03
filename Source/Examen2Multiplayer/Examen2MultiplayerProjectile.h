@@ -26,6 +26,8 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	class UStaticMeshComponent* Cosa;
+
+	
 	AExamen2MultiplayerProjectile();
 	
 

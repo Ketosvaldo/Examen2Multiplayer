@@ -117,12 +117,15 @@ void AExamen2MultiplayerCharacter::HandleFire_Implementation()
 {
 	if(GEngine)
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Some debug message!"));
-	FVector spawnLocation = GetActorLocation() + ( GetActorRotation().Vector()  * 100.0f ) + (GetActorUpVector() * 50.0f);
-	FRotator spawnRotation = GetActorRotation();
+	if(bHasRifle)
+	{
+		FVector spawnLocation = GetActorLocation() + ( GetActorRotation().Vector()  * 100.0f ) + (GetActorUpVector() * 50.0f);
+		FRotator spawnRotation = GetActorRotation();
 
-	FActorSpawnParameters spawnParameters;
-	spawnParameters.Instigator = GetInstigator();
-	spawnParameters.Owner = this;
+		FActorSpawnParameters spawnParameters;
+		spawnParameters.Instigator = GetInstigator();
+		spawnParameters.Owner = this;
 
-	AExamen2MultiplayerProjectile* spawnedProjectile = GetWorld()->SpawnActor<AExamen2MultiplayerProjectile>(spawnLocation, spawnRotation, spawnParameters);
+		AExamen2MultiplayerProjectile* spawnedProjectile = GetWorld()->SpawnActor<AExamen2MultiplayerProjectile>(spawnLocation, spawnRotation, spawnParameters);
+	}
 }
